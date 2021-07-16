@@ -9,14 +9,14 @@ function Particle(x, y) {
 
 Particle.prototype.behaviors = function () {
     var seek = this.arrive(this.target);
-    var mouse = createVector(mouseX, mouseY);
-    var repel = this.repel(mouse);
+   // var mouse = createVector(mouseX, mouseY);
+   // var repel = this.repel(mouse);
 
     seek.mult(1);
-    repel.mult(5);
+   // repel.mult(5);
 
     this.acc.add(seek);
-    this.acc.add(repel);
+   // this.acc.add(repel);
 }
 
 Particle.prototype.update = function () {
@@ -52,7 +52,7 @@ Particle.prototype.show = function () {
 Particle.prototype.repel = function (target) {
     var desired = p5.Vector.sub(target, this.pos);
     var d = desired.mag();
-    if (d < 50) {
+    if (d < 90) {
       desired.setMag(this.maxSpeed);
       desired.mult(-1);
       var steer = p5.Vector.sub(desired, this.vel);
