@@ -49,14 +49,14 @@ Particle.prototype.show = function () {
     point(this.pos.x, this.pos.y);
 }
 
-Particle.prototype.repel = function (target) {
+Particle.prototype.repel = function (target, radius) {
     var desired = p5.Vector.sub(target, this.pos);
     var d = desired.mag();
-    if (d < 90) {
+    if (d < radius) {
       desired.setMag(this.maxSpeed);
       desired.mult(-1);
       var steer = p5.Vector.sub(desired, this.vel);
-      steer.limit(this.maxForce);
+      steer.limit(random(0.5));
       return steer;
     } else {
       return createVector(0, 0);
