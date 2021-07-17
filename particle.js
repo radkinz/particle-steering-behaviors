@@ -9,14 +9,8 @@ function Particle(x, y) {
 
 Particle.prototype.behaviors = function () {
     var seek = this.arrive(this.target);
-   // var mouse = createVector(mouseX, mouseY);
-   // var repel = this.repel(mouse);
-
     seek.mult(1);
-   // repel.mult(5);
-
     this.acc.add(seek);
-   // this.acc.add(repel);
 }
 
 Particle.prototype.update = function () {
