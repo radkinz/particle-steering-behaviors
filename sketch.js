@@ -9,7 +9,7 @@ function setup() {
   createCanvas(600, 300);
   background(0);
 
-  var points = font.textToPoints('penis', 100, 200, 192, {
+  var points = font.textToPoints('word', 50, 200, 192, {
     sampleFactor: 0.25
   });
 
@@ -29,10 +29,10 @@ function draw() {
 }
 
 function mousePressed() {
-  var mouse = createVector(mouseX, mouseY);
+  var mouse = createVector(width/2, height/2);
 
   for (let i = 0; i < particles.length; i++) {
-    var repel = particles[i].repel(mouse);
+    var repel = particles[i].repel(mouse, random(300));
     repel.mult(20);
 
     particles[i].acc.add(repel);
