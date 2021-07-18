@@ -1,27 +1,24 @@
 var font;
 var particles = [];
 var img;
+var song;
 
 function preload() {
   font = loadFont('AvenirNextLTPro-Demi.otf');
-  img = loadImage('bjAlex.jpg')
+  img = loadImage('bjAlex.jpg');
+  song = loadSound("FEVER.mp3");
 }
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
+  song.play();
+  fft = new p5.FFT(0.5, 64);
 
-  var points = [];
-  img.resize(width, height)
-  img.loadPixels();
-  for (let x = 0; x < img.width; x+=10) {
-    for (let y = 0; y < img.height; y+=10) {
-      let index = 4*(y*width+x);
-      let avg = (img.pixels[index] + img.pixels[index+1] + img.pixels[index+2])/3;
-      console.log(img.pixels[index], y, avg)
-      if (avg < 100) {
-        particles.push(new Particle(x, y));
-      }
-    }
+  var points = font.textToPoints('Fever', 50, (height/2)+100, width*0.35, {
+    sampleFactor: 0.25
+  });
+  for (let i = 0; i < points.length; i++) {
+    particles.push(new Particle(points[i].x, points[i].y));
   }
 }
 
@@ -33,13 +30,28 @@ function draw() {
     particles[i].update();
     particles[i].show();
   }
+
+  //get song spectrum and freq avg
+  var spectrum = fft.analyze();
+  var freq_avg = 0;
+  for (let i = 0; i < spectrum.length; i++) {
+    freq_avg += spectrum[i]
+  }
+  freq_avg = freq_avg/spectrum.length
+
+  //create repulsion based on music if loud enough
+  if (pow(freq_avg, 2) < 16000) {
+      repelParticles(map(pow(freq_avg, 4), 0, 500000000, 0, width/4));
+  } else {
+      repelParticles(width/2);
+  }
 }
 
-function mousePressed() {
-  var mouse = createVector(width/2, height/2);
+function repelParticles(radius) {
+  var center = createVector(width/2, height/2);
 
   for (let i = 0; i < particles.length; i++) {
-    var repel = particles[i].repel(mouse, random(max(width/2, height/2)));
+    var repel = particles[i].repel(center, radius);
     repel.mult(20);
 
     particles[i].acc.add(repel);
