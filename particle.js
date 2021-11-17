@@ -1,5 +1,5 @@
 function Particle(x, y) {
-    this.pos = createVector(random(width), random(height));
+    this.pos = createVector(random(width+200), random(height+200));
     this.vel = p5.Vector.random2D();
     this.target = createVector(x, y);
     this.acc = createVector();
@@ -11,6 +11,12 @@ Particle.prototype.behaviors = function () {
     var seek = this.arrive(this.target);
     seek.mult(1);
     this.acc.add(seek);
+
+    //repel from mouse
+    var mouse = createVector(mouseX, mouseY);
+    var repel = this.repel(mouse, 100);
+    repel.mult(5);
+    this.acc.add(repel);
 }
 
 Particle.prototype.update = function () {
