@@ -8,7 +8,7 @@ function preload() {
 function setup() {
   createCanvas(windowWidth, windowHeight);
 
-  var points = font.textToPoints('Saints', 50, (height/2)+120, width*0.25, {
+  var points = font.textToPoints('Saints', 50, (height/2)+100, width*0.25, {
     sampleFactor: 0.25
   });
   for (let i = 0; i < points.length; i++) {
@@ -17,7 +17,7 @@ function setup() {
 }
 
 function draw() {
-  background(0);
+  background("#793140");
   
   for (var i = 0; i < particles.length; i++) {
     particles[i].behaviors();

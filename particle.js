@@ -1,10 +1,18 @@
 function Particle(x, y) {
-    this.pos = createVector(random(width+200), random(height+200));
+    this.pos = createVector(randomOutsideofBounds(width), randomOutsideofBounds(height));
     this.vel = p5.Vector.random2D();
     this.target = createVector(x, y);
     this.acc = createVector();
     this.maxSpeed = 5;
     this.maxForce = 0.3;
+}
+
+function randomOutsideofBounds(boundary) {
+    if (random(1) < 0.5) {
+        return (random(-300, 0))
+    } 
+
+    return (random(boundary, boundary+300))
 }
 
 Particle.prototype.behaviors = function () {
