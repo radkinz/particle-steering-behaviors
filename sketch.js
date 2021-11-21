@@ -8,7 +8,7 @@ function preload() {
 function setup() {
   createCanvas(windowWidth, windowHeight);
 
-  var points = font.textToPoints('Saints', 50, (height/2)+100, width*0.25, {
+  var points = font.textToPoints('Saints', width*0.135, (height/2)+100, width*0.25, {
     sampleFactor: 0.25
   });
   for (let i = 0; i < points.length; i++) {
